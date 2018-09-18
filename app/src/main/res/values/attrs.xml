@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RoundprogressView">
+
+        <attr name="ringWidth" format="dimension" />
+        <attr name="startAngle" format="float" />
+        <attr name="sweepAngle" format="float" />
+        <attr name="reachColor" format="color" />
+        <attr name="unReachColor" format="color" />
+        <attr name="roundProgress" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="HorizontalprogressView">
+        <!--圆柱总长度-->
+        <attr name="totalBarLength" format="dimension" />
+        <attr name="barWidth" format="dimension" />
+        <attr name="hTextOffset" format="dimension" />
+        <attr name="drawableOffset" format="dimension" />
+        <attr name="textSize" format="dimension" />
+        <attr name="vTextOffset" format="dimension" />
+        <attr name="maxValue" format="integer" />
+        <attr name="vTextColor" format="color" />
+        <attr name="hTextColor" format="color" />
+        <attr name="unReachBarColor" format="color" />
+        <attr name="reachBarColor" format="color" />
+        <attr name="drawable" format="reference" />
+        <attr name="horizontalProgress" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="SubscriptImageView">
+
+        <attr name="subWidth" format="dimension" />
+        <attr name="subBarWidth" format="dimension" />
+        <attr name="subBgColor" format="color" />
+        <attr name="subTextColor" format="color" />
+        <attr name="subText" format="string" />
+        <attr name="subTextSize" format="dimension" />
+    </declare-styleable>
+
+</resources>
