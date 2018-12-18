@@ -6,9 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,21 +20,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        RefreshAndLoadMoreView view = (RefreshAndLoadMoreView) findViewById(R.id.refresh_load_view);
-//        TextView textView = new TextView(this);
-//        textView.setText("内容布局");
-//        textView.setGravity(Gravity.CENTER);
-//        textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "dianji", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        view.setContentView(textView);
+        RefreshAndLoadMoreView view = (RefreshAndLoadMoreView) findViewById(R.id.refresh_load_view);
+        TextView textView = new TextView(this);
+        textView.setText("内容布局");
+        textView.setGravity(Gravity.CENTER);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "dianji", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.setContentView(textView);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyAdapter(this));
+//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(new MyAdapter(this));
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {

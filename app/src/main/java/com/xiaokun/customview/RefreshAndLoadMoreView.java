@@ -76,11 +76,12 @@ public class RefreshAndLoadMoreView extends LinearLayout {
      */
     public void setContentView(View view) {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.height = params.height + mHeaderHeight;
         view.setLayoutParams(params);
         addView(view, 1);
         //尾布局
-//        View footerView = mInflater.inflate(R.layout.footer_layout, this, false);
-//        addView(footerView, 2);
+        View footerView = mInflater.inflate(R.layout.footer_layout, this, false);
+        addView(footerView, 2);
     }
 
     @Override
@@ -90,6 +91,12 @@ public class RefreshAndLoadMoreView extends LinearLayout {
         if (changed) {
             mHeaderHeight = getChildAt(0).getHeight();
             scrollTo(0, mHeaderHeight);
+            View view = getChildAt(1);
+            int measuredHeight = view.getMeasuredHeight();
+            measuredHeight = measuredHeight + mHeaderHeight;
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            layoutParams.height = measuredHeight;
+            view.setLayoutParams(layoutParams);
         }
     }
 
@@ -139,6 +146,8 @@ public class RefreshAndLoadMoreView extends LinearLayout {
             case MotionEvent.ACTION_UP:
                 intercepted = false;
                 break;
+            default:
+                break;
         }
         mLastXIntercept = x;
         mLastYIntercept = y;
@@ -170,6 +179,8 @@ public class RefreshAndLoadMoreView extends LinearLayout {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 onActionUp();
+                break;
+            default:
                 break;
         }
         mLastX = x;
