@@ -2,6 +2,8 @@ package com.xiaokun.customview;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,28 +15,52 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xiaokun.customview.refresh_layout.RefreshLayout;
+
 public class MainActivity extends AppCompatActivity {
+
+    private RefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RefreshAndLoadMoreView view = (RefreshAndLoadMoreView) findViewById(R.id.refresh_load_view);
-        TextView textView = new TextView(this);
-        textView.setText("内容布局");
-        textView.setGravity(Gravity.CENTER);
-        textView.setOnClickListener(new View.OnClickListener() {
+        refreshLayout = findViewById(R.id.refresh_layout);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new MyAdapter(this));
+
+        refreshLayout.setOnRefresh(new RefreshLayout.OnRefresh() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "dianji", Toast.LENGTH_SHORT).show();
+            public void onDownPullRefresh() {
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        switch (msg.what) {
+                            case 0:
+                                refreshLayout.downPullFinish();
+                        }
+                    }
+                }.sendEmptyMessageDelayed(0, 2000);
+            }
+
+            @Override
+            public void onUpPullRefresh() {
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        switch (msg.what) {
+                            case 1:
+                                refreshLayout.upPullFinish();
+                        }
+                    }
+                }.sendEmptyMessageDelayed(1, 2000);
             }
         });
-        view.setContentView(textView);
-
-//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(new MyAdapter(this));
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {

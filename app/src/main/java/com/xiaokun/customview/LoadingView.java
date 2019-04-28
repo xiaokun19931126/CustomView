@@ -12,8 +12,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+
+import com.xiaokun.customview.refresh_layout.RefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +29,7 @@ import java.util.List;
  * @date 2018/9/13
  */
 
-public class LoadingView extends View {
+public class LoadingView extends View implements RefreshLayout.HeadAndFootCallBack {
     private static final String TAG = "LoadingView";
     private Paint mPaint;
     private Context mContext;
@@ -52,6 +56,14 @@ public class LoadingView extends View {
         mPaint.setStyle(Paint.Style.FILL);
     }
 
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        Log.e("xiao", "bottom:" + bottom);
+        Log.e("xiao", "right:" + right);
+    }
+
     int r1 = 0;
     int r2 = 0;
     int r3 = 0;
@@ -61,12 +73,14 @@ public class LoadingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.translate(0, 20);
+        int dx = getWidth() / 2 - 65;
+        int dy = getHeight() / 2;
+//        canvas.translate(0, 20);
+        canvas.translate(dx, dy);
 
         canvas.drawCircle(20, 0, r1, mPaint);
         canvas.drawCircle(65, 0, r2, mPaint);
         canvas.drawCircle(110, 0, r3, mPaint);
-
     }
 
     private List<ValueAnimator> animatorList = new ArrayList<>();
@@ -177,6 +191,9 @@ public class LoadingView extends View {
             valueAnimator.end();
             valueAnimator.cancel();
         }
+        r1 = 0;
+        r2 = 0;
+        r3 = 0;
     }
 
     private float dpToPx(float dp) {
@@ -191,5 +208,20 @@ public class LoadingView extends View {
             return (int) (dpToPx(dp) + 0.5f);
         }
         return 0;
+    }
+
+    @Override
+    public void setAttribute() {
+
+    }
+
+    @Override
+    public void startPull() {
+        start();
+    }
+
+    @Override
+    public void stopPull() {
+        release();
     }
 }
